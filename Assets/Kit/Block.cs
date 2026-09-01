@@ -30,19 +30,19 @@ public class Block : MonoBehaviour
     // Update is called once per frame
     void speedController()
     {
-        if (spawner.Score >= 5)
+        if (spawner.Score >= 7)
         {
             speed = 6;
         }
-        else if (spawner.Score >= 10)
+        else if (spawner.Score >= 13)
         {
             speed = 8;
         }
-        else if (spawner.Score >= 15)
+        else if (spawner.Score >= 17)
         {
             speed = 10;
         }
-        else if (spawner.Score >= 20)
+        else if (spawner.Score >= 25)
         {
             speed = 20;
         }
