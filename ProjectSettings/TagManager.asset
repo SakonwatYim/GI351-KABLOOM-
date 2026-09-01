@@ -4,6 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags: []
+  tags:
+  - Block
+  - floor
   layers:
   - Default
   - TransparentFX
