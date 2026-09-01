@@ -290,12 +290,15 @@ MonoBehaviour:
   items:
   - {fileID: 5347479326097965706, guid: 8489881b3aca35c4aa9d3db851fe9145, type: 3}
   - {fileID: 8746492439432234495, guid: 7d23ea6cb4a57dc42a8ad7e294f72b6d, type: 3}
+  - {fileID: 8746492439432234495, guid: fbe876f5a019f8b4ea9f86daed4b5245, type: 3}
+  - {fileID: 8746492439432234495, guid: cfd30a59b58b31b46a1619425fd89c8c, type: 3}
   Block: {fileID: 0}
   previousBlock: {fileID: 0}
   newBlock: {fileID: 0}
   oldblock: {fileID: 0}
   title: {fileID: 0}
   newScale: 0
+  Score: 0
 --- !u!4 &657695744
 Transform:
   m_ObjectHideFlags: 0
