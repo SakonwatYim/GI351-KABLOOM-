@@ -5,7 +5,7 @@ public class UiManager : MonoBehaviour
 {
     public void Play()
     {
-        SceneManager.LoadSceneAsync("SampleScene");
+        SceneManager.LoadSceneAsync("kit");
     }
 
     public void Credits()
