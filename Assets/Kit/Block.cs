@@ -64,13 +64,24 @@ public class Block : MonoBehaviour
 
         }
         speedController();
-       Debug.Log($"{speed}");
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
         if (collision2D.gameObject.CompareTag("Block"))
         {
             Block otherBlock = collision2D.gameObject.GetComponent<Block>();
+            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Fire))
+            {
+                speed *= 2;
+                Wait1();
+                speed /= 2;
+            }
+            if ((blockType == BlockType.water && otherBlock.blockType == BlockType.water))
+            {
+                speed /= 2;
+                Wait1();
+                speed *= 2;
+            }
             if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Plant)|| (blockType == BlockType.Plant && otherBlock.blockType == BlockType.Fire))
             {
                 if (blockType == BlockType.Plant)
