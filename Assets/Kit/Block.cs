@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using static blockMeneger;
 using static Unity.Collections.AllocatorManager;
 
@@ -27,7 +28,26 @@ public class Block : MonoBehaviour
     }
 
     // Update is called once per frame
-   
+    void speedController()
+    {
+        if (spawner.Score >= 5)
+        {
+            speed = 6;
+        }
+        else if (spawner.Score >= 10)
+        {
+            speed = 8;
+        }
+        else if (spawner.Score >= 15)
+        {
+            speed = 10;
+        }
+        else if (spawner.Score >= 20)
+        {
+            speed = 20;
+        }
+    }
+
     void FixedUpdate()
     {
         if (Isfly == true)
@@ -43,7 +63,8 @@ public class Block : MonoBehaviour
             Isfly = false;
 
         }
-       //Debug.Log($"{spawner.Score}");
+        speedController();
+       Debug.Log($"{speed}");
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {

@@ -49,8 +49,7 @@ public class blockMeneger : MonoBehaviour
     // Update is called once per frame
     void Update()
     { }
-
-
+    
     public void spawnBllock(float scale)
     {
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
