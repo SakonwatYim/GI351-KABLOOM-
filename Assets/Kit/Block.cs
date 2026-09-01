@@ -32,17 +32,21 @@ public class Block : MonoBehaviour
     {
         if (spawner.Score >= 7)
         {
-            speed = 6;
+            speed = 4;
         }
         else if (spawner.Score >= 13)
         {
-            speed = 8;
+            speed = 6;
         }
         else if (spawner.Score >= 17)
         {
-            speed = 10;
+            speed = 8;
         }
         else if (spawner.Score >= 25)
+        {
+            speed = 10;
+        }
+        else if (spawner.Score >= 33)
         {
             speed = 20;
         }
