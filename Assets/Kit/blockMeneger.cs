@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,10 +9,12 @@ public class blockMeneger : MonoBehaviour
 
     public enum BlockType
     {
+        //Normal,
+        //Fire,
+        Plant, 
+        water,
         Normal,
-        Fire,
-        Ice,
-        Bomb
+        Fire
     }
     public GameObject[] items;
     public Block Block;
@@ -20,10 +23,12 @@ public class blockMeneger : MonoBehaviour
     public GameObject newBlock;
     public GameObject oldblock;
     public GameObject title;
-   float spawnY = 2f;
-   float height = 1f;
+   float spawnY ;
+   float height ;
+   float sum;
     public float newScale;
     int blockCount = 1;
+    public int Score = 0;
 
     void Start()
     {
@@ -49,8 +54,10 @@ public class blockMeneger : MonoBehaviour
     public void spawnBllock(float scale)
     {
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
-        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, spawnY), UnityEngine.Quaternion.identity);
-        spawnY += height;
+        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
+        spawnY = previousBlock.transform.position.y;
+        height = 7;
+        sum = math.abs(spawnY + height);
         //สองบันทัดล่างคือเก็บค่าที่สุ่มได้ไปในสคลิป Block
         Block block = title.GetComponent<Block>();
         block.blockType = (BlockType)itemDrop;
@@ -70,7 +77,6 @@ public class blockMeneger : MonoBehaviour
         {
             title.transform.localScale = new UnityEngine.Vector2(scale, title.transform.localScale.y);
         }
-
         //if else เป็นตัวช่วยกำหนด ใช้แต้ม
     }
 }

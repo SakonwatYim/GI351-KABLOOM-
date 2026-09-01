@@ -41,18 +41,57 @@ public class Block : MonoBehaviour
         {
             rb.gravityScale = 1;
             Isfly = false;
+
         }
+       //Debug.Log($"{spawner.Score}");
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
         if (collision2D.gameObject.CompareTag("Block"))
         {
             Block otherBlock = collision2D.gameObject.GetComponent<Block>();
-             if (gameObject != spawner.newBlock)
-        {
-            return;
-        }
+          
+         
+       
+            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Plant)
+              || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.Fire))
+            {
+                if (blockType == BlockType.Plant)
+                {
+                    Destroy(this.gameObject);
+                    spawner.previousBlock = otherBlock.gameObject;
+                }
+                else if (otherBlock.blockType == BlockType.Plant)
+                {
+                    Destroy(otherBlock.gameObject);
+                    spawner.previousBlock = this.gameObject;
+                }
 
+                Debug.Log("Plant and Fire");
+            }
+            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.water)
+                || (blockType == BlockType.water && otherBlock.blockType == BlockType.Fire))
+            {
+                if (blockType == BlockType.Fire)
+                {
+                    Destroy(this.gameObject);
+                    spawner.previousBlock = otherBlock.gameObject;
+                }
+                else if (otherBlock.blockType == BlockType.Fire)
+                {
+                    Destroy(otherBlock.gameObject);
+                    spawner.previousBlock = this.gameObject;
+
+                }
+                Debug.Log("Fire and water");
+            }
+
+            if (gameObject != spawner.newBlock)
+
+            {
+                return;
+            
+            }
             if (spawner.previousBlock != null)
             {
                 spawner.previousBlock = collision2D.gameObject;
@@ -64,16 +103,16 @@ public class Block : MonoBehaviour
                 SpawnA = false;
                 spawner.spawnBllock(newScale);
             }
-            /*  if ((blockType == BlockType.Fire &&
-                  otherBlock.blockType == BlockType.Water) ||
+            if ((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
             {
-                 (blockType == BlockType.Water &&
-                  otherBlock.blockType == BlockType.Fire))      
-                 // 🔥 + 💧
-                 // เกิดปฏิกิริยา
-           }
-         */
+                this.gameObject.transform.localScale = new Vector2(spawner.previousBlock.transform.localScale.x, spawner.newBlock.transform.localScale.y);
+                spawner.newBlock.transform.localScale = this.gameObject.transform.localScale;
+                Debug.Log("Plant and water");
+            }
+
+
         }
+        
         if (collision2D.gameObject.CompareTag("floor"))
         {
            if (SpawnA == true)
@@ -81,6 +120,7 @@ public class Block : MonoBehaviour
             spawner.spawnBllock(7);
             }
             SpawnA = false;
+            spawner.Score += 1;
 
         }
     }
@@ -131,12 +171,13 @@ public class Block : MonoBehaviour
             spawner.newBlock.transform.position.y
         );
 
-        spawner.newBlock.transform.localScale = new Vector2(
+            spawner.newBlock.transform.localScale = new Vector2(
             newScale,
             spawner.newBlock.transform.localScale.y
 
         );
         spawner.newScale = newScale;
+        spawner.Score += 1;
 
     }
 

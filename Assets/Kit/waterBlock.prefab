@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5713391733456633217}
   - component: {fileID: 1638895481913499249}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: waterBlock
   m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.34961188, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -107,8 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8b73fec63a7334999a28157becffb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Block
-  blockType: 0
+  blockType: 1
   spawner: {fileID: 0}
+  newScale: 0
 --- !u!50 &5713391733456633217
 Rigidbody2D:
   serializedVersion: 5
