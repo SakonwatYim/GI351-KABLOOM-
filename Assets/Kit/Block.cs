@@ -64,7 +64,7 @@ public class Block : MonoBehaviour
 
         }
         speedController();
-       Debug.Log($"{speed}");
+       
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
