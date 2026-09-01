@@ -50,11 +50,7 @@ public class Block : MonoBehaviour
         if (collision2D.gameObject.CompareTag("Block"))
         {
             Block otherBlock = collision2D.gameObject.GetComponent<Block>();
-          
-         
-       
-            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Plant)
-              || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.Fire))
+            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Plant)|| (blockType == BlockType.Plant && otherBlock.blockType == BlockType.Fire))
             {
                 if (blockType == BlockType.Plant)
                 {
@@ -90,11 +86,13 @@ public class Block : MonoBehaviour
 
             {
                 return;
-            
+            //เช็คให้บล็อกล่าสุดคือ new block 
             }
+            
             if (spawner.previousBlock != null)
             {
-                spawner.previousBlock = collision2D.gameObject;
+                //ถ้าบล็อกล่าสุดมีอยู่แล้วให้ทำงานในฟังก์ชั่น
+                spawner.previousBlock = collision2D.gameObject;//บล็อกก่อนหน้าคือบล็ํอกที่ชน
                 spawner.newBlock = gameObject;
                 CutBlock();
             }
