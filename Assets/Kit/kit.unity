@@ -297,6 +297,7 @@ MonoBehaviour:
   newBlock: {fileID: 0}
   oldblock: {fileID: 0}
   title: {fileID: 0}
+  Iswater: 0
   newScale: 0
   Score: 0
 --- !u!4 &657695744
@@ -375,10 +376,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 1000.6
   field of view: 60
   orthographic: 1
-  orthographic size: 7.84
+  orthographic size: 7.36
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

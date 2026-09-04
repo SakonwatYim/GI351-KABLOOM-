@@ -9,8 +9,7 @@ public class blockMeneger : MonoBehaviour
 
     public enum BlockType
     {
-        //Normal,
-        //Fire,
+        
         Plant, 
         water,
         Normal,
@@ -23,7 +22,8 @@ public class blockMeneger : MonoBehaviour
     public GameObject newBlock;
     public GameObject oldblock;
     public GameObject title;
-   float spawnY ;
+     public bool Iswater;
+    float spawnY ;
    float height ;
    float sum;
     public float newScale;
@@ -54,9 +54,8 @@ public class blockMeneger : MonoBehaviour
     {
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
         title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
-        spawnY = previousBlock.transform.position.y;
-        height = 7;
-        sum = math.abs(spawnY + height);
+        height = newBlock.transform.position.y;
+        sum =  height+4;
         //สองบันทัดล่างคือเก็บค่าที่สุ่มได้ไปในสคลิป Block
         Block block = title.GetComponent<Block>();
         block.blockType = (BlockType)itemDrop;

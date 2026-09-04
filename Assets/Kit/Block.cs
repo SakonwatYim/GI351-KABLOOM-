@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using static blockMeneger;
@@ -19,7 +20,30 @@ public class Block : MonoBehaviour
     int direction = 1;
     bool SpawnA = true;
     public float newScale;
+    IEnumerator Wait(GameObject block)
+    {
+        yield return new WaitForSeconds(4f);
 
+        Destroy(block);
+    }
+    IEnumerator Waitboost()
+    {
+        speed *= 2;
+       
+        yield return new WaitForSeconds(5f);
+
+        speed /= 2;
+        //ส่วนใหญ่หน่วงเวลาจะต้องทำในเม็ดทอดเดียวกัน
+    }
+    IEnumerator Waitslow()
+    {
+        speed /= 2;
+
+        yield return new WaitForSeconds(5f);
+
+        speed *= 2;
+        //ส่วนใหญ่หน่วงเวลาจะต้องทำในเม็ดทอดเดียวกัน
+    }
     void Start()
     {
        rb = GetComponent<Rigidbody2D>();
@@ -30,28 +54,27 @@ public class Block : MonoBehaviour
     // Update is called once per frame
     void speedController()
     {
-        if (spawner.Score >= 7)
+        if (spawner.Score >= 33)
         {
-            speed = 4;
-        }
-        else if (spawner.Score >= 13)
-        {
-            speed = 6;
-        }
-        else if (spawner.Score >= 17)
-        {
-            speed = 8;
+            speed = 20;
         }
         else if (spawner.Score >= 25)
         {
             speed = 10;
         }
-        else if (spawner.Score >= 33)
+        else if (spawner.Score >= 17)
         {
-            speed = 20;
+            speed = 8;
+        }
+        else if (spawner.Score >= 13)
+        {
+            speed = 6;
+        }
+        else if (spawner.Score >= 7)
+        {
+            speed = 4;
         }
     }
-
     void FixedUpdate()
     {
         if (Isfly == true)
@@ -68,23 +91,36 @@ public class Block : MonoBehaviour
 
         }
         speedController();
+
+
        
+
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
         if (collision2D.gameObject.CompareTag("Block"))
         {
             Block otherBlock = collision2D.gameObject.GetComponent<Block>();
+            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Fire))
+            {
+                StartCoroutine(Waitboost());
+            }
+            if ((blockType == BlockType.water && otherBlock.blockType == BlockType.water))
+            {
+                StartCoroutine(Waitslow());
+            }
             if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Plant)|| (blockType == BlockType.Plant && otherBlock.blockType == BlockType.Fire))
             {
                 if (blockType == BlockType.Plant)
                 {
-                    Destroy(this.gameObject);
+                    StartCoroutine(Wait(this.gameObject));
+                   /* Destroy(this.gameObject);*/
                     spawner.previousBlock = otherBlock.gameObject;
                 }
                 else if (otherBlock.blockType == BlockType.Plant)
                 {
-                    Destroy(otherBlock.gameObject);
+                    StartCoroutine(Wait(otherBlock.gameObject));
+                    //Destroy(otherBlock.gameObject);
                     spawner.previousBlock = this.gameObject;
                 }
 
@@ -106,7 +142,7 @@ public class Block : MonoBehaviour
                 }
                 Debug.Log("Fire and water");
             }
-
+          
             if (gameObject != spawner.newBlock)
 
             {
@@ -121,18 +157,18 @@ public class Block : MonoBehaviour
                 spawner.newBlock = gameObject;
                 CutBlock();
             }
-            if (SpawnA == true)
-            {
-                SpawnA = false;
-                spawner.spawnBllock(newScale);
-            }
+        
             if ((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
             {
                 this.gameObject.transform.localScale = new Vector2(spawner.previousBlock.transform.localScale.x, spawner.newBlock.transform.localScale.y);
                 spawner.newBlock.transform.localScale = this.gameObject.transform.localScale;
                 Debug.Log("Plant and water");
             }
-
+            if (SpawnA == true)
+            {
+                SpawnA = false;
+                spawner.spawnBllock(newScale);
+            }
 
         }
         
