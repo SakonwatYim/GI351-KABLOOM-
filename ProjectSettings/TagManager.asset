@@ -9,6 +9,9 @@ TagManager:
   - Water
   - Ground
   - Box
+  - Block
+  - floor
+
   layers:
   - Default
   - TransparentFX
