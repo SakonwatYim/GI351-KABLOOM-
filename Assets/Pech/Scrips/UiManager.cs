@@ -49,14 +49,16 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
-        LoadVolume();
-        MusicManager.GetInstance().PlayMusic("MainMenu");
+        // เช็คว่ามีค่าเซฟไว้หรือไม่ ถ้ามีให้โหลด ถ้าไม่มีให้ตั้งค่าเริ่มต้น
         if (PlayerPrefs.HasKey("MusicVolume"))
         {
             LoadVolume();
         }
         else
         {
+            // ค่าเริ่มต้นของ Slider เมื่อเปิดเกมครั้งแรก (1 = 100%)
+            musicSlider.value = 1f;
+            sfxSlider.value = 1f;
             UpdateMusicVolume();
             UpdateSoundVolume();
         }
@@ -128,13 +130,20 @@ public class UiManager : MonoBehaviour
         
     }
 
-    private void LoadVolume()
+   private void LoadVolume()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
-        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume");
-        
-        UpdateMusicVolume();
-        UpdateSoundVolume();
+    float savedMusic = PlayerPrefs.GetFloat("MusicVolume", 1f);
+    float savedSfx = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
+    // ถ้าค่าเซฟเก่าเป็น 0 หรือติดลบ ให้บังคับตั้งค่าเป็น 1 (เต็มหลอด 100%)
+    if (savedMusic <= 0.001f) savedMusic = 1f;
+    if (savedSfx <= 0.001f) savedSfx = 1f;
+
+    musicSlider.value = savedMusic;
+    sfxSlider.value = savedSfx;
+    
+    UpdateMusicVolume();
+    UpdateSoundVolume();
     }
      public void buttonClickSound()
     {
