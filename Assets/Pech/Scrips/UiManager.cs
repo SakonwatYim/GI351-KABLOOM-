@@ -5,9 +5,25 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
-    public AudioMixer audiomixer;
+    public AudioMixer audioMixer;
     public Slider musicSlider;
     public Slider sfxSlider;
+    private static UiManager instance;
+    public static UiManager GetInstance()
+    {
+        return instance;
+    }
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
 
 
     [Header("Ui ref")]
@@ -17,8 +33,9 @@ public class UiManager : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadSceneAsync("kit");
-        SoundManager.GetInstance().PlaySound2D("Button");
+        SoundManager.GetInstance().PlaySound2D("ClickPlay");
         MusicManager.GetInstance().PlayMusic("Gameplay");
+        
     }
 
     public void Credits()
@@ -31,12 +48,21 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
-        LoadSetting();
+        LoadVolume();
         if (howToPlayRef != null)
         {
             howToPlayRef.SetActive(false);
         }
+        if (creditsRef != null)
+        {
+            creditsRef.SetActive(false);
+        }
+        if (SettingRef != null)
+        {
+            SettingRef.SetActive(false);
+        }
         MusicManager.GetInstance().PlayMusic("MainMenu");
+
     }
 
     public void HowToPlay()
@@ -67,31 +93,39 @@ public class UiManager : MonoBehaviour
         
     }
 
-    public void UpdateMusicVolume(float volume)
+      public void UpdateMusicVolume()
     {
-        audiomixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20);
-        SoundManager.GetInstance().PlaySound2D("Button");
+        float volume = musicSlider.value;
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(volume)*20);
+        PlayerPrefs.SetFloat("MusicVolume", volume);
     }
 
-    public void UpdateSFXVolume(float volume)
+    public void UpdateSoundVolume()
     {
-        audiomixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20);
-        SoundManager.GetInstance().PlaySound2D("Button");
+        float volume = sfxSlider.value;
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(volume)*20);
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 
     public void SaveSetting()
     {
-        audiomixer.GetFloat("MusicVolume", out float musicVolume);
+        audioMixer.GetFloat("MusicVolume", out float musicVolume);
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
-        audiomixer.GetFloat("SFXVolume", out float sfxVolume);
+        audioMixer.GetFloat("SFXVolume", out float sfxVolume);
         PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
         
     }
 
-    public void LoadSetting()
+    private void LoadVolume()
     {
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume");
         
+        UpdateMusicVolume();
+        UpdateSoundVolume();
+    }
+     public void buttonClickSound()
+    {
+        SoundManager.GetInstance().PlaySound2D("ClickPlay");
     }
 }
