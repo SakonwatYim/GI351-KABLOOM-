@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
+    
     public AudioMixer audioMixer;
     public Slider musicSlider;
     public Slider sfxSlider;
@@ -49,6 +50,17 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         LoadVolume();
+        MusicManager.GetInstance().PlayMusic("MainMenu");
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            LoadVolume();
+        }
+        else
+        {
+            UpdateMusicVolume();
+            UpdateSoundVolume();
+        }
+        
         if (howToPlayRef != null)
         {
             howToPlayRef.SetActive(false);
