@@ -386,17 +386,15 @@ public class Block : MonoBehaviour
         rb.MovePosition(new_position);
         if (rb.position.x >= max)
         {
-            direction = -1;
+            direction = -3;
         }
         else if (rb.position.x <= min)
         {
-            direction = 1;
+            direction = 3;
         }
 
 
     }
 
-    // public void Star()
-
-    //รอเรื่องคะแนน
+   
 }

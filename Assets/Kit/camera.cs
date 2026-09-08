@@ -23,12 +23,12 @@ public class camera : MonoBehaviour
         {
             targetY = 8;
         }*/
-        targetY = spawner.pawannapat.transform.position.y;
+        targetY = -0.83f;
 
 
         Vector3 targetPosition = new Vector3(
-            transform.position.x,
-            targetY,
+            0.24f,
+            0.25f,
             transform.position.z
         );
 
