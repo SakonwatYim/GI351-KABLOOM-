@@ -6,12 +6,13 @@ public class camera : MonoBehaviour
     public blockMeneger spawner;
 
     public float speed = 5f;
+    public float targetY;
 
     void LateUpdate()
     {
         
 
-        float targetY = spawner.newBlock.transform.position.y;
+        targetY = spawner.newBlock.transform.position.y;
 
         Vector3 targetPosition = new Vector3(
             transform.position.x,
