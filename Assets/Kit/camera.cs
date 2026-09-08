@@ -7,17 +7,28 @@ public class camera : MonoBehaviour
 
     public float speed = 5f;
     public float targetY;
-    public float targetY1;
 
     void LateUpdate()
     {
         
-            targetY = spawner.newBlock.transform.position.y;
-        
+        /* if (spawner.newBlock != null)
+        {
+            targetY = spawner.newBlock.transform.position.y + 5f;
+        }
+        else if (spawner.previousBlock != null)
+        {
+            targetY = spawner.previousBlock.transform.position.y + 5f;
+        }
+        else if (spawner.newBlock != null && spawner.previousBlock != null)
+        {
+            targetY = 8;
+        }*/
+        targetY = spawner.pawannapat.transform.position.y;
+
 
         Vector3 targetPosition = new Vector3(
             transform.position.x,
-            targetY1,
+            targetY,
             transform.position.z
         );
 
@@ -29,12 +40,12 @@ public class camera : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

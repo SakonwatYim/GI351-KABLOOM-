@@ -13,8 +13,8 @@ public class Destroy_Matoy : MonoBehaviour
     void Start()
     {
         meneger = FindAnyObjectByType<blockMeneger>();
-        StartCoroutine(Wait());  
+        StartCoroutine(Wait());
     }
 
-    
+
 }
