@@ -248,18 +248,20 @@ public class Block : MonoBehaviour
                 spawner.newBlock.transform.localScale = this.gameObject.transform.localScale;
                 Debug.Log("Plant and water");
             }
-            if (SpawnA == true)
+           /* if (SpawnA == true)
             {
                 SpawnA = false;
                 spawner.spawnBllock(newScale);
             } 
-            else
+   
+            else if (SpawnA == false )
             {
                 spawner.spawnBllock(newScale);
-            }
+            }*/
             spawner.Score  += 1;
+            spawner.spawnBllock(newScale);
         }
-        
+
         if (collision2D.gameObject.CompareTag("floor"))
         {
            if (SpawnA == true)

@@ -252,7 +252,7 @@ Transform:
   m_GameObject: {fileID: 353417922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2631, y: -4.46, z: 0}
+  m_LocalPosition: {x: 0.2631, y: -19.7, z: 0}
   m_LocalScale: {x: 18.753578, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -292,7 +292,10 @@ MonoBehaviour:
   - {fileID: 8746492439432234495, guid: 7d23ea6cb4a57dc42a8ad7e294f72b6d, type: 3}
   - {fileID: 8746492439432234495, guid: fbe876f5a019f8b4ea9f86daed4b5245, type: 3}
   - {fileID: 8746492439432234495, guid: cfd30a59b58b31b46a1619425fd89c8c, type: 3}
+  items_melt: {fileID: 5341253426176705845, guid: 266b3dd1966f64b47bd1c9284574bf3f, type: 3}
+  items_Matoy: {fileID: 5002196043949158501, guid: fe5d8ed42180d0a4f9aa56e0cc7a4fd7, type: 3}
   Block: {fileID: 0}
+  cams: {fileID: 1309072020}
   previousBlock: {fileID: 0}
   newBlock: {fileID: 0}
   oldblock: {fileID: 0}
@@ -300,6 +303,7 @@ MonoBehaviour:
   Iswater: 0
   newScale: 0
   Score: 0
+  scaleX: 0
 --- !u!4 &657695744
 Transform:
   m_ObjectHideFlags: 0
@@ -379,7 +383,7 @@ Camera:
   far clip plane: 1000.6
   field of view: 60
   orthographic: 1
-  orthographic size: 7.36
+  orthographic size: 21.97
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -468,6 +472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::camera
   spawner: {fileID: 657695743}
   speed: 5
+  targetY: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
