@@ -7,16 +7,17 @@ public class camera : MonoBehaviour
 
     public float speed = 5f;
     public float targetY;
+    public float targetY1;
 
     void LateUpdate()
     {
         
-
-        targetY = spawner.newBlock.transform.position.y;
+            targetY = spawner.newBlock.transform.position.y;
+        
 
         Vector3 targetPosition = new Vector3(
             transform.position.x,
-            targetY,
+            targetY1,
             transform.position.z
         );
 
