@@ -1,111 +1,90 @@
-using TMPro;
 using UnityEngine;
+using TMPro; // สำหรับใช้ UI TextMeshPro
 
 public class GameTimer : MonoBehaviour
 {
-    [Header("UI Text (TextMeshPro)")]
-    [SerializeField] private TextMeshProUGUI timerText;     // ข้อความแสดงเวลาปัจจุบัน
-    [SerializeField] private TextMeshProUGUI bestTimeText;  // ข้อความแสดงสถิติเวลาที่ดีที่สุด
+    [Header("Game Settings")]
+    public float targetHeight = 20f; // กำหนดความสูง Y ที่ต้องการให้จบเกม
 
+    [Header("UI References")]
+    public TextMeshProUGUI timerText;      // UI แสดงเวลาปัจจุบัน
+    public TextMeshProUGUI bestTimeText;   // UI แสดงเวลาที่ดีที่สุด
+    public GameObject winPanel;            // หน้าต่าง UI ตอนชนะ
+
+    private blockMeneger spawner;
     private float currentTime = 0f;
-    private bool isTimerRunning = false;
-    private bool hasStarted = false; // ตัวแปรล็อกไม่ให้กด Spacebar ซ้ำ
-    private static float deltaTime;
-
-    // คีย์สำหรับบันทึกลง PlayerPrefs
-    private const string BEST_TIME_KEY = "Game_BestTime";
+    private bool isGameOver = false;
 
     void Start()
     {
-        // โหลด High Score เดิมขึ้นมาโชว์ตอนเปิดเกม
-        DisplayBestTime();
+        // ค้นหาสคริปต์ blockMeneger ในฉากอัตโนมัติ
+        spawner = FindObjectOfType<blockMeneger>();
+
+        // ปิดหน้าต่างชนะตอนเริ่มเกม
+        if (winPanel != null) winPanel.SetActive(false);
+
+        // ดึงค่าเวลาที่ดีที่สุดมาแสดงตอนเริ่ม (ถ้ายังไม่มีจะเป็นเลขเยอะมาก)
+        float bestTime = PlayerPrefs.GetFloat("BestTime", float.MaxValue);
+        if (bestTime < float.MaxValue)
+        {
+            bestTimeText.text = "Best Time: " + FormatTime(bestTime);
+        }
+        else
+        {
+            bestTimeText.text = "Best Time: --:--";
+        }
     }
 
     void Update()
     {
-        // 1. กด Spacebar เพื่อเริ่มจับเวลา (ทำงานเฉพาะตอนที่ยังไม่เคยเริ่ม)
-        if (Input.GetKeyDown(KeyCode.Space) && !hasStarted)
+        if (isGameOver || spawner == null) return;
+
+        // นับเวลาเดินหน้า
+        currentTime += Time.deltaTime;
+        if (timerText != null)
         {
-            StartTimer();
+            timerText.text = "Time: " + FormatTime(currentTime);
         }
 
-        // 2. ระหว่างที่เวลากำลังเดิน
-        if (isTimerRunning)
+        // ตรวจสอบว่าความสูงของ pawannapat ถึงจุดที่กำหนดหรือยัง
+        if (spawner.pawannapat != null && spawner.pawannapat.transform.position.y >= targetHeight)
         {
-            currentTime += Time.deltaTime;
-            timerText.text = FormatTime(currentTime);
+            TriggerWinCondition();
         }
     }
 
-    public void StartTimer()
+    void TriggerWinCondition()
     {
-        hasStarted = true;
-        isTimerRunning = true;
-        currentTime = 0f;
-    }
+        isGameOver = true;
 
-    // 3. ฟังก์ชันเรียกตอนจบเกม (เช่น ชนเส้นชัย หรือทำภารกิจเสร็จ)
-    public void FinishGame()
-    {
-        // ถ้าเวลายังไม่เริ่มหรือหยุดไปแล้ว ไม่ต้องทำอะไร
-        if (!isTimerRunning) return;
+        // หยุดเวลาในเกม (ทำให้บล็อกไม่ขยับและไม่ร่วง โดยไม่ต้องไปแก้สคริปต์ Block)
+        Time.timeScale = 0f;
 
-        isTimerRunning = false;
-        CheckAndUpdateBestTime(currentTime);
-    }
+        // เปิดหน้า UI ชนะ
+        if (winPanel != null) winPanel.SetActive(true);
 
-    private void CheckAndUpdateBestTime(float finalTime)
-    {
-        // ดึงสถิติเดิม ถ้าไม่เคยมี ให้ตั้งเป็นค่าอนันต์ (Infinity) ไว้ก่อน
-        float bestTime = PlayerPrefs.GetFloat(BEST_TIME_KEY, Mathf.Infinity);
-
-        // ถ้าเวลาที่ทำได้ "น้อยกว่า" สถิติเดิม = สถิติใหม่ (เร็วขึ้น)
-        if (finalTime < bestTime)
+        // ตรวจสอบและบันทึกสถิติใหม่
+        float bestTime = PlayerPrefs.GetFloat("BestTime", float.MaxValue);
+        if (currentTime < bestTime)
         {
-            PlayerPrefs.SetFloat(BEST_TIME_KEY, finalTime);
-            PlayerPrefs.Save();
-            Debug.Log($"ทำลายสถิติใหม่! เวลา: {FormatTime(finalTime)}");
-        }
+            PlayerPrefs.SetFloat("BestTime", currentTime);
+            PlayerPrefs.Save(); // บันทึกข้อมูลลงเครื่อง
 
-        DisplayBestTime();
-    }
-
-    private void DisplayBestTime()
-    {
-        if (PlayerPrefs.HasKey(BEST_TIME_KEY))
-        {
-            float bestTime = PlayerPrefs.GetFloat(BEST_TIME_KEY);
-            bestTimeText.text = "Best: " + FormatTime(bestTime);
+            bestTimeText.text = "NEW BEST TIME!\n" + FormatTime(currentTime);
         }
         else
         {
-            bestTimeText.text = "Best: --:--.--";
+            bestTimeText.text = "Time: " + FormatTime(currentTime) + "\nBest: " + FormatTime(bestTime);
         }
     }
 
-    // ฟังก์ชันแปลงตัวเลขวินาทีเป็นรูปแบบ นาที:วินาที.มิลลิวินาที (00:00.00)
-    private string FormatTime(float timeInSeconds)
+    // แปลงวินาทีให้เป็นรูปแบบ นาที:วินาที:มิลลิวินาที
+    string FormatTime(float time)
     {
-        int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
-        int seconds = Mathf.FloorToInt(timeInSeconds % 60f);
-        int milliseconds = Mathf.FloorToInt((timeInSeconds * 100f) % 100f);
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+        int milliseconds = Mathf.FloorToInt((time * 100f) % 100f);
 
-        return string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, milliseconds);
-    }
-
-    // ฟังก์ชันรีเซ็ตรอบใหม่ (เรียกใช้เมื่อกดปุ่ม Restart)
-    public void ResetGame()
-    {
-        hasStarted = false;
-        isTimerRunning = false;
-        currentTime = 0f;
-        timerText.text = "00:00.00";
-    }
-
-    // ตัวเลือกเสริม: ล้างสถิติ High score
-    public void ClearBestTime()
-    {
-        PlayerPrefs.DeleteKey(BEST_TIME_KEY);
-        DisplayBestTime();
+        return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
     }
 }

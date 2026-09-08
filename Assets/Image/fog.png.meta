@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-
-guid: 0989170f5f0422543a95f6336772c478
-
-guid: 588a21fab984bce4f85604ac5a4bdd7d
-
+guid: cb8475bfaed857e44a44e546854b97a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6729266602588337016
-    second: rapid 01 game BG_0
+      213: -1766006069671443837
+    second: fog_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,11 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-
   spritePixelsToUnits: 100
-
-  spritePixelsToUnits: 1400
-
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -108,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rapid 01 game BG_0
+      name: fog_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1152
-        height: 30000
+        width: 2000
+        height: 2219
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 88c82d99da7dc92a0800000000000000
-      internalID: -6729266602588337016
+      spriteID: 382cc0a16d2ed77e0800000000000000
+      internalID: -1766006069671443837
       vertices: []
       indices: 
       edges: []
@@ -143,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rapid 01 game BG_0: -6729266602588337016
+      fog_0: -1766006069671443837
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

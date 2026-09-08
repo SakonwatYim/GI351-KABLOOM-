@@ -24,7 +24,7 @@ public class UiManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
 
 
@@ -94,6 +94,10 @@ public class UiManager : MonoBehaviour
         
         SoundManager.GetInstance().PlaySound2D("Button");
     }
+
+    
+
+    
 
     public void OpenSetting()
     {
