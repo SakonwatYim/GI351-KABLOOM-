@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 353417925}
   - component: {fileID: 353417924}
   - component: {fileID: 353417923}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: floor
   m_TagString: floor
   m_Icon: {fileID: 0}
@@ -252,8 +252,8 @@ Transform:
   m_GameObject: {fileID: 353417922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2631, y: -6.4, z: 0}
-  m_LocalScale: {x: 7.7124085, y: 1, z: 1}
+  m_LocalPosition: {x: 0.2631, y: -28.91, z: 0}
+  m_LocalScale: {x: 6, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -289,18 +289,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::blockMeneger
   items:
   - {fileID: 5347479326097965706, guid: 8489881b3aca35c4aa9d3db851fe9145, type: 3}
-  - {fileID: 8746492439432234495, guid: 2978a6388cac2524f922d922fa2392b0, type: 3}
+  - {fileID: 8746492439432234495, guid: fbe876f5a019f8b4ea9f86daed4b5245, type: 3}
   - {fileID: 8746492439432234495, guid: 7d23ea6cb4a57dc42a8ad7e294f72b6d, type: 3}
+  - {fileID: 8746492439432234495, guid: cfd30a59b58b31b46a1619425fd89c8c, type: 3}
   items_melt: {fileID: 5341253426176705845, guid: 266b3dd1966f64b47bd1c9284574bf3f, type: 3}
   items_Matoy: {fileID: 3443994405187251284, guid: a4cbfc7be3050014cbc766728e8f854c, type: 3}
+  pawannapat: {fileID: 353417922}
   Block: {fileID: 0}
-  cams: {fileID: 1309072020}
   previousBlock: {fileID: 0}
   newBlock: {fileID: 0}
   oldblock: {fileID: 0}
   title: {fileID: 0}
   Iswater: 0
+  haspress: 1
   newScale: 0
+  blockCount: 1
   matoy_count: 0
   Score: 0
 --- !u!4 &657695744
@@ -382,7 +385,7 @@ Camera:
   far clip plane: 1000.6
   field of view: 60
   orthographic: 1
-  orthographic size: 21.97
+  orthographic size: 32.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

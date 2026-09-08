@@ -15,15 +15,15 @@ public class Block : MonoBehaviour
 {
     bool Isfly = true;
     public blockMeneger spawner;
-/*    public camera cam;
-*/    public Destroy_Matoy Matoy;
+    /*    public camera cam;
+    */
+    public Destroy_Matoy Matoy;
     Rigidbody2D rb;
     int speed = 2;
     int max = 3;
     int min = -1;
     int direction = 1;
     bool SpawnA = true;
-    public float newScale;
     float newY;
     float newX;
     float topY;
@@ -36,14 +36,14 @@ public class Block : MonoBehaviour
     void melt()
     {
         newY = transform.localScale.y;
-        newY -= Time.deltaTime ;
+        newY -= Time.deltaTime;
         if (newY <= 0)
         {
             newY = 0;
             isMelt = false;
             Destroy(gameObject);
         }
-       
+
         transform.localScale = new Vector2(transform.localScale.x, newY);
 
     }
@@ -61,23 +61,23 @@ public class Block : MonoBehaviour
         transform.localScale = new Vector2(newX, transform.localScale.y);
 
     }
-   
+
     void Plant()
     {
-        float newYPlant = gameObject.transform.localScale.y;
-       float sum = newYPlant + Time.deltaTime;
-        if (sum >= 3)
+        float newYPlant = transform.localScale.y;
+        float PlantToy = newYPlant + Time.deltaTime;
+        if (PlantToy >= 3)
         {
-            sum = 3;
+            PlantToy = 3;
             spawPlant = false;
 
         }
-        transform.localScale = new Vector2(spawner.previousBlock.transform.localScale.x, sum);
+        transform.localScale = new Vector2(spawner.previousBlock.transform.localScale.x, PlantToy);
 
     }
-  /*  IEnumerator Wait3()
-    {
-        yield return new WaitForSeconds(0.5f);*/
+    /*  IEnumerator Wait3()
+      {
+          yield return new WaitForSeconds(0.5f);*/
     //}
     IEnumerator Wait()
     {
@@ -87,10 +87,21 @@ public class Block : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         spawner.haspress = true;
     }
+    IEnumerator Wait5()
+    {
+        yield return new WaitForSeconds(1f);
+        spawner.spawnBllock();
+        spawner.Score += 1;
+    }
+   /* void spawn()
+    {
+        spawner.spawnBllock();
+        spawner.Score += 1;
+    }*/
     IEnumerator Wait2()
     {
         yield return new WaitForSeconds(4f);
-       GameObject melt = Instantiate(spawner.items_melt, new UnityEngine.Vector2(transform.position.x, transform.position.y), UnityEngine.Quaternion.identity);
+        GameObject melt = Instantiate(spawner.items_melt, new UnityEngine.Vector2(transform.position.x, transform.position.y), UnityEngine.Quaternion.identity);
 
     }
     IEnumerator Wait_boom()
@@ -101,25 +112,25 @@ public class Block : MonoBehaviour
 
 
             spawner.matoy_count++;
-            matoy = Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x,topY), UnityEngine.Quaternion.identity);
+            matoy = Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x, topY), UnityEngine.Quaternion.identity);
 
             float matoy_Topy = matoy.GetComponent<Collider2D>().bounds.max.y;
 
-            float sum =matoy_Topy - topY;
+            float sum = matoy_Topy - topY;
             topY -= sum;
-            matoy.transform.position = new Vector2(transform.position.x, topY + 3);
+            matoy.transform.position = new Vector2(transform.position.x, topY + 6);
 
-            topY = matoy_Topy;
-           yield return new WaitForSeconds(8f);
+/*            topY = matoy_Topy;
+*/            yield return new WaitForSeconds(8f);
             spawMatoy = false;
         }
-       
+
 
     }
     IEnumerator Waitboost()
     {
         speed *= 2;
-       
+
         yield return new WaitForSeconds(5f);
 
         speed /= 2;
@@ -140,7 +151,7 @@ public class Block : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         BoxCollider2D col = GetComponent<BoxCollider2D>();
     }
-    
+
 
     // Update is called once per frame
     //void set asset
@@ -169,6 +180,10 @@ public class Block : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (gameObject == matoy)
+        {
+            matoy.transform.position = new Vector2(spawner.previousBlock.transform.position.x, topY);
+        }
         if (Isfly == true)
         {
             Controller();
@@ -180,31 +195,35 @@ public class Block : MonoBehaviour
         {
             Plant();
         }
-        if(isMelt == true)
+        if (isMelt == true)
         {
             melt();
         }
-        if (spawMatoy == true )
+        if (spawMatoy == true)
         {
             melt2();
         }
-        
-        if (gameObject == spawner.newBlock && Input.GetKeyDown(KeyCode.Space)&& spawner.haspress== true)
+
+
+        if (gameObject == spawner.newBlock && Input.GetKeyDown(KeyCode.Space) && spawner.haspress == true)
         {
             Debug.Log("Ad");
             rb.gravityScale = 1;
             Isfly = false;
             rb.gravityScale = 9.81f;
-            spawner.haspress = false;
             StartCoroutine(Wait());
-           
+            if (spawner.blockCount >= 1)
+            {
+                StartCoroutine(Wait5());
+            }
+            spawner.haspress = false;
 
         }
         speedController();
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        if(collision2D.gameObject.layer == LayerMask.NameToLayer("Block"))
+        if (collision2D.gameObject.layer == LayerMask.NameToLayer("Block"))
         /*(collision2D.gameObject.CompareTag("Block"))*/
         /*(collision2D.gameObject.CompareTag("Block"))*/
         {
@@ -221,19 +240,19 @@ public class Block : MonoBehaviour
             {
 
             }
-            if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("plant")))|| ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("Fire"))))
+            if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("Fire"))))
             {
                 spawMelt = true;
                 if (CompareTag("plant"))
                 {
-                    
+
                     isMelt = true;
-                    
+
                     spawner.previousBlock = otherBlock.gameObject;
                 }
                 else if (collision2D.gameObject.CompareTag("plant"))
                 {
-                   
+
                     isMelt = true;
 
                     spawner.previousBlock = this.gameObject;
@@ -248,7 +267,7 @@ public class Block : MonoBehaviour
                 {
                     spawMatoy = true;
 
-                    
+
 
                     //เสกหมอก
                     StartCoroutine((Wait_boom()));
@@ -256,10 +275,10 @@ public class Block : MonoBehaviour
                 }
                 else if (collision2D.gameObject.CompareTag("Fire"))
                 {
-                   
+
                     spawMatoy = true;
 
-                   
+
 
                     //เสกหมอก
                     StartCoroutine((Wait_boom()));
@@ -268,14 +287,34 @@ public class Block : MonoBehaviour
                 }
                 Debug.Log("Fire and water");
             }
-          
+
+           
+
+            if (((CompareTag("water")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("water"))))
+            //((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
+            {
+             
+                if (CompareTag("plant"))
+                {
+                    Debug.Log("matoy");
+                    spawPlant = true;
+                }
+                if (collision2D.gameObject.CompareTag("plant"))
+                {
+                    Debug.Log("matoy");
+                    collision2D.gameObject.GetComponent<Block>().spawPlant = true;
+                }
+
+            }
+
             if (gameObject != spawner.newBlock)
 
             {
                 return;
-            //เช็คให้บล็อกล่าสุดคือ new block 
+                //เช็คให้บล็อกล่าสุดคือ new block 
             }
-            
+
+
             if (spawner.previousBlock != null)
             {
                 //ถ้าบล็อกล่าสุดมีอยู่แล้วให้ทำงานในฟังก์ชั่น
@@ -283,41 +322,12 @@ public class Block : MonoBehaviour
                 spawner.newBlock = gameObject;
             }
 
-            if (((CompareTag("water")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("water"))))
-            //((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
-            {
-                
-                if (CompareTag("plant"))
-                 {
-                    spawPlant = true;
-                }
-                if (collision2D.gameObject.CompareTag("plant"))
-                {
-                    collision2D.gameObject.GetComponent<Block>().spawPlant = true;
-                }
-                Debug.Log("Plant and water");
-                
-            }
-
-            spawner.spawnBllock(newScale);
-
-
-            spawner.Score  += 1;
-        }
-
-        if(collision2D.gameObject.CompareTag("floor"))
-            //(collision2D.gameObject.CompareTag("floor"))
-        {
-           if (SpawnA == true)
-            {
-            spawner.spawnBllock(7);
-            }
-            SpawnA = false;
-            spawner.Score += 1;
 
         }
+
+        
     }
-   
+
     /*public void CutBlock()
     {
         float oldX = spawner.previousBlock.transform.position.x;
@@ -370,11 +380,11 @@ public class Block : MonoBehaviour
 
     public void Controller()
     {
-        
+
         //ใช้rb.moveposition
-        Vector2 new_position = rb.position + Vector2.right* direction * speed * Time.fixedDeltaTime;
-        rb.MovePosition(new_position); 
-        if (rb.position.x >= max) 
+        Vector2 new_position = rb.position + Vector2.right * direction * speed * Time.fixedDeltaTime;
+        rb.MovePosition(new_position);
+        if (rb.position.x >= max)
         {
             direction = -1;
         }
@@ -386,8 +396,7 @@ public class Block : MonoBehaviour
 
     }
 
-   // public void Star()
-    
-     //รอเรื่องคะแนน
-}
+    // public void Star()
 
+    //รอเรื่องคะแนน
+}
