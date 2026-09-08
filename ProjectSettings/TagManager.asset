@@ -13,6 +13,7 @@ TagManager:
   - floor
   - water
   - plant
+  - FinishLine
   layers:
   - Default
   - TransparentFX
