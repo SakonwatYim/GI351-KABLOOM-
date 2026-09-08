@@ -9,6 +9,7 @@ using static blockMeneger;
 using static Unity.Collections.AllocatorManager;
 using UnityEditor;
 using System.Reflection.Metadata;
+using Unity.Mathematics;
 
 public class Block : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Block : MonoBehaviour
     bool isMelt;
     bool spawMelt;
     bool spawMatoy;
+    GameObject matoy;
     void melt()
     {
         newY = transform.localScale.y;
@@ -45,12 +47,12 @@ public class Block : MonoBehaviour
     void melt2()
     {
         newX = transform.localScale.x;
-        newX -= Time.deltaTime;
+        newX -= Time.deltaTime * 10;
         if (newX <= 0)
         {
             newX = 0;
             isMelt = false;
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
 
         transform.localScale = new Vector2(newX, transform.localScale.y);
@@ -61,9 +63,18 @@ public class Block : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
     }
+    IEnumerator Wait2()
+    {
+        yield return new WaitForSeconds(4f);
+       GameObject melt = Instantiate(spawner.items_melt, new UnityEngine.Vector2(transform.position.x, transform.position.y), UnityEngine.Quaternion.identity);
+
+    }
     IEnumerator Wait_boom()
     {
+        matoy = Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x, cam.targetY), UnityEngine.Quaternion.identity);
         yield return new WaitForSeconds(8f);
+        spawMatoy = false;
+
 
     }
     IEnumerator Waitboost()
@@ -86,7 +97,8 @@ public class Block : MonoBehaviour
     }
     void Start()
     {
-
+        cam = FindAnyObjectByType<camera>();
+        spawner = FindAnyObjectByType<blockMeneger>();
         rb = GetComponent<Rigidbody2D>();
         BoxCollider2D col = GetComponent<BoxCollider2D>();
     }
@@ -130,6 +142,11 @@ public class Block : MonoBehaviour
         {
             melt();
         }
+        if (spawMatoy == true )
+        {
+            melt2();
+        }
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.gravityScale = 1;
@@ -161,11 +178,11 @@ public class Block : MonoBehaviour
                     isMelt = true;
                     if (spawMelt == true)
                     {
-                        Instantiate(spawner.items_melt, new UnityEngine.Vector2(transform.position.x, transform.position.y), UnityEngine.Quaternion.identity);
+                       
                         spawMelt = false;
                     }
-                    spawner.spawnBllock(newScale);
-                    spawner.newBlock = otherBlock.gameObject;
+                    StartCoroutine(Wait2());
+                    spawner.previousBlock = otherBlock.gameObject;
                 }
                 else if (otherBlock.blockType == BlockType.Plant)
                 {
@@ -173,13 +190,11 @@ public class Block : MonoBehaviour
 
                     if (spawMelt == true)
                     {
-                        Instantiate(spawner.items_melt, new UnityEngine.Vector2(transform.position.x, transform.position.y), UnityEngine.Quaternion.identity);
                         spawMelt = false;
                     }
-                    spawner.spawnBllock(newScale);
-                    spawner.newBlock = this.gameObject;
+                    StartCoroutine(Wait2());
+                    spawner.previousBlock = this.gameObject;
                 }
-
                 Debug.Log("Plant and Fire");
             }
             if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.water)
@@ -187,31 +202,27 @@ public class Block : MonoBehaviour
             {
                 if (blockType == BlockType.Fire)
                 {
-                    spawMatoy = true;
-                    if (spawMatoy == true)
+                    if (spawMatoy)
                     {
-                        Debug.Log(cam.targetY);
-                        Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x, cam.targetY), UnityEngine.Quaternion.identity);
-                        StartCoroutine((Wait_boom()));
-                        melt2();
+                        return;
                     }
+                    spawMatoy = true;
+                    
                     //เสกหมอก
-                    Destroy(this.gameObject);
-                    spawner.newBlock = otherBlock.gameObject;
+                    StartCoroutine((Wait_boom()));
+                    spawner.previousBlock = otherBlock.gameObject;
                 }
                 else if (otherBlock.blockType == BlockType.Fire)
                 {
-                    spawMatoy = true;
-                    if (spawMatoy == true)
+                    if (spawMatoy)
                     {
-                        Debug.Log(cam.targetY);
-                        Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x, cam.targetY), UnityEngine.Quaternion.identity);
-                        StartCoroutine((Wait_boom()));
-                        melt2();
+                        return;
                     }
+                    spawMatoy = true;
+
                     //เสกหมอก
-                    Destroy(this.gameObject);
-                    spawner.newBlock = otherBlock.gameObject;
+                    StartCoroutine((Wait_boom()));
+                    spawner.previousBlock = this.gameObject;
 
                 }
                 Debug.Log("Fire and water");

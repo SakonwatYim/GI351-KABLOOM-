@@ -12,7 +12,7 @@ public class camera : MonoBehaviour
     {
         
 
-        targetY = spawner.previousBlock.transform.position.y;
+        targetY = spawner.newBlock.transform.position.y;
 
         Vector3 targetPosition = new Vector3(
             transform.position.x,

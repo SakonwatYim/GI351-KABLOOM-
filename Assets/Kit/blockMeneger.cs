@@ -63,8 +63,7 @@ public class blockMeneger : MonoBehaviour
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
         title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
         title.transform.localScale = new UnityEngine.Vector2(scaleX, xcaleY);
-        height = newBlock.transform.position.y;
-        sum =  height+ transform.position.y;
+        sum = newBlock.transform.position.y + 5;
         //สองบันทัดล่างคือเก็บค่าที่สุ่มได้ไปในสคลิป Block
         Block block = title.GetComponent<Block>();
         block.blockType = (BlockType)itemDrop;
