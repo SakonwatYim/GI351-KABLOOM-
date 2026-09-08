@@ -54,7 +54,7 @@ public class blockMeneger : MonoBehaviour
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
         /*        title.transform.localScale = new UnityEngine.Vector2(scaleX, xcaleY);
         */
-        float sum1 = pawannapat.transform.position.y + 1.7f;
+       // float sum1 = pawannapat.transform.position.y + 1.7f;
 
         if (newBlock == null)
         {
@@ -62,18 +62,11 @@ public class blockMeneger : MonoBehaviour
         }
         else
         {
-            if (sum - sum1 >= 10)
-            {
-                sum +=2f ;
-            }
-            else
-            {
                 sum += 3.4f;
-            }
         }
         
-        pawannapat.transform.position = new UnityEngine.Vector2(pawannapat.transform.position.x, sum1);
-        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
+       // pawannapat.transform.position = new UnityEngine.Vector2(pawannapat.transform.position.x, sum1);
+        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(-0.24f, 58), UnityEngine.Quaternion.identity);
         //สองบันทัดล่างคือเก็บค่าที่สุ่มได้ไปในสคลิป Block
         Block block = title.GetComponent<Block>();
 
