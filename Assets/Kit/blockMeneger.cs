@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Numerics;
 using Unity.Mathematics;
 using UnityEngine;
@@ -7,80 +7,88 @@ using UnityEngine.UIElements;
 public class blockMeneger : MonoBehaviour
 {
 
-   /* public enum BlockType
-    {
-        
-        Plant, 
-        water,
-        Normal,
-        Fire
-    }*/
+    /* public enum BlockType
+     {
+
+         Plant, 
+         water,
+         Normal,
+         Fire
+     }*/
     public GameObject[] items;
     public GameObject items_melt;
     public GameObject items_Matoy;
+    public GameObject pawannapat;
     public Block Block;
-    //enumµ”·ÀπËßµÈÕßµ√ß°—∫„π array
+    //enum‡∏ï‡∏≥‡πÅ‡∏´‡∏ô‡πà‡∏á‡∏ï‡πâ‡∏≠‡∏á‡∏ï‡∏£‡∏á‡∏Å‡∏±‡∏ö‡πÉ‡∏ô array
     public GameObject previousBlock;
     public GameObject newBlock;
     public GameObject oldblock;
     public GameObject title;
-     public bool Iswater;
-     public bool haspress = true;
-    float spawnY ;
-    float height ;
+    public bool Iswater;
+    public bool haspress = true;
+    float spawnY;
+    float height;
     float sum;
     public float newScale;
-    int blockCount = 1;
+    public int blockCount = 1;
     public int matoy_count = 0;
     public int Score = 0;
 
 
 
-    void Start() 
+    void Start()
     {
-       
+
+        spawnBllock();
+    }
+
+    // Update is called once per frame
+    void Update()
+    { }
+    public void spawnBllock()
+    {
+        /*        scaleX = UnityEngine.Random.Range(3, 8);
+        */
+        int xcaleY = 1;
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
-        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, 2), UnityEngine.Quaternion.identity);
-        // Õß∫—π∑—¥≈Ë“ß§◊Õ‡°Á∫§Ë“∑’Ë ÿË¡‰¥È‰ª„π §≈‘ª Block
+        /*        title.transform.localScale = new UnityEngine.Vector2(scaleX, xcaleY);
+        */
+        float sum1 = pawannapat.transform.position.y + 1.7f;
+
+        if (newBlock == null)
+        {
+            sum = pawannapat.transform.position.y + 15;
+        }
+        else
+        {
+            if (sum - sum1 >= 10)
+            {
+                sum +=2f ;
+            }
+            else
+            {
+                sum += 3.4f;
+            }
+        }
+        
+        pawannapat.transform.position = new UnityEngine.Vector2(pawannapat.transform.position.x, sum1);
+        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
+        //‡∏™‡∏≠‡∏á‡∏ö‡∏±‡∏ô‡∏ó‡∏±‡∏î‡∏•‡πà‡∏≤‡∏á‡∏Ñ‡∏∑‡∏≠‡πÄ‡∏Å‡πá‡∏ö‡∏Ñ‡πà‡∏≤‡∏ó‡∏µ‡πà‡∏™‡∏∏‡πà‡∏°‡πÑ‡∏î‡πâ‡πÑ‡∏õ‡πÉ‡∏ô‡∏™‡∏Ñ‡∏•‡∏¥‡∏õ Block
         Block block = title.GetComponent<Block>();
+
         newBlock = title;
         block.spawner = this;
         if (previousBlock == null)
         {
             previousBlock = newBlock;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    { }
-    public void spawnBllock(float scale)
-    {
-/*        scaleX = UnityEngine.Random.Range(3, 8);
-*/      int xcaleY = 1;
-        int itemDrop = UnityEngine.Random.Range(0, items.Length);
-        title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
-/*        title.transform.localScale = new UnityEngine.Vector2(scaleX, xcaleY);
-*/       sum = newBlock.transform.position.y + 7;
-        // Õß∫—π∑—¥≈Ë“ß§◊Õ‡°Á∫§Ë“∑’Ë ÿË¡‰¥È‰ª„π §≈‘ª Block
-        Block block = title.GetComponent<Block>();
-        
-        newBlock = title;
-        block.spawner = this;
-        if (previousBlock == null)
+        if (blockCount >= 1 )
         {
-           previousBlock = newBlock;
+            blockCount ++;
         }
-
-       if (blockCount == 1 || blockCount == 2)
-        {
-            blockCount += 1;
-        }
-       if (blockCount > 2) 
-        {
-            title.transform.localScale = new UnityEngine.Vector2(title.transform.localScale.x, title.transform.localScale.y);
-        }
-        //if else ‡ªÁπµ—«™Ë«¬°”Àπ¥ „™È·µÈ¡
+       
+        //if else ‡πÄ‡∏õ‡πá‡∏ô‡∏ï‡∏±‡∏ß‡∏ä‡πà‡∏ß‡∏¢‡∏Å‡∏≥‡∏´‡∏ô‡∏î ‡πÉ‡∏ä‡πâ‡πÅ‡∏ï‡πâ‡∏°
     }
 }
-
