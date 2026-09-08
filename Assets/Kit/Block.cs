@@ -231,17 +231,20 @@ public class Block : MonoBehaviour
             if ((gameObject.CompareTag("Fire")) && (collision2D.gameObject.CompareTag("Fire")))
             {
                 StartCoroutine(Waitboost());
+                SoundManager.GetInstance().PlaySound2D("FireFire");
             }
             if ((gameObject.CompareTag("water")) && (collision2D.gameObject.CompareTag("water")))
             {
                 StartCoroutine(Waitslow());
+                SoundManager.GetInstance().PlaySound2D("WaterWater");
             }
             if ((gameObject.CompareTag("plant")) && (collision2D.gameObject.CompareTag("plant")))
             {
-
+                SoundManager.GetInstance().PlaySound2D("GlassGlass");
             }
             if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("Fire"))))
             {
+                SoundManager.GetInstance().PlaySound2D("FireGlass");
                 spawMelt = true;
                 if (CompareTag("plant"))
                 {
@@ -262,6 +265,7 @@ public class Block : MonoBehaviour
             if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("water"))) || ((CompareTag("water")) && (collision2D.gameObject.CompareTag("Fire"))))
             //((blockType == BlockType.Fire && otherBlock.blockType == BlockType.water)
             //|| (blockType == BlockType.water && otherBlock.blockType == BlockType.Fire))
+            SoundManager.GetInstance().PlaySound2D("FireWater");
             {
                 if (CompareTag("Fire"))
                 {
@@ -293,6 +297,7 @@ public class Block : MonoBehaviour
             if (((CompareTag("water")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("water"))))
             //((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
             {
+                SoundManager.GetInstance().PlaySound2D("WaterGlass");
              
                 if (CompareTag("plant"))
                 {
