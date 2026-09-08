@@ -7,32 +7,32 @@ using UnityEngine.UIElements;
 public class blockMeneger : MonoBehaviour
 {
 
-    public enum BlockType
+   /* public enum BlockType
     {
         
         Plant, 
         water,
         Normal,
         Fire
-    }
+    }*/
     public GameObject[] items;
     public GameObject items_melt;
     public GameObject items_Matoy;
     public Block Block;
-    public camera cams;
     //enumตำแหน่งต้องตรงกับใน array
     public GameObject previousBlock;
     public GameObject newBlock;
     public GameObject oldblock;
     public GameObject title;
      public bool Iswater;
+     public bool haspress = true;
     float spawnY ;
     float height ;
     float sum;
     public float newScale;
     int blockCount = 1;
+    public int matoy_count = 0;
     public int Score = 0;
-    public int scaleX;
 
 
 
@@ -43,8 +43,6 @@ public class blockMeneger : MonoBehaviour
         title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, 2), UnityEngine.Quaternion.identity);
         //สองบันทัดล่างคือเก็บค่าที่สุ่มได้ไปในสคลิป Block
         Block block = title.GetComponent<Block>();
-        block.blockType = (BlockType)itemDrop;
-        block.cam = cams;
         newBlock = title;
         block.spawner = this;
         if (previousBlock == null)
@@ -58,15 +56,14 @@ public class blockMeneger : MonoBehaviour
     { }
     public void spawnBllock(float scale)
     {
-        scaleX = UnityEngine.Random.Range(3, 8);
-        int xcaleY = 1;
+/*        scaleX = UnityEngine.Random.Range(3, 8);
+*/      int xcaleY = 1;
         int itemDrop = UnityEngine.Random.Range(0, items.Length);
         title = Instantiate(items[itemDrop], new UnityEngine.Vector2(2, sum), UnityEngine.Quaternion.identity);
-        title.transform.localScale = new UnityEngine.Vector2(scaleX, xcaleY);
-        sum = newBlock.transform.position.y + 5;
+/*        title.transform.localScale = new UnityEngine.Vector2(scaleX, xcaleY);
+*/       sum = newBlock.transform.position.y + 7;
         //สองบันทัดล่างคือเก็บค่าที่สุ่มได้ไปในสคลิป Block
         Block block = title.GetComponent<Block>();
-        block.blockType = (BlockType)itemDrop;
         
         newBlock = title;
         block.spawner = this;
@@ -81,7 +78,7 @@ public class blockMeneger : MonoBehaviour
         }
        if (blockCount > 2) 
         {
-            title.transform.localScale = new UnityEngine.Vector2(scaleX, title.transform.localScale.y);
+            title.transform.localScale = new UnityEngine.Vector2(title.transform.localScale.x, title.transform.localScale.y);
         }
         //if else เป็นตัวช่วยกำหนด ใช้แต้ม
     }

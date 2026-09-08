@@ -11,6 +11,8 @@ TagManager:
   - Box
   - Block
   - floor
+  - water
+  - plant
   layers:
   - Default
   - TransparentFX
@@ -19,9 +21,9 @@ TagManager:
   - Water
   - UI
   - ExtraUI
-  - Fire
-  - Water
-  - Plant
+  - Block
+  - floor
+  - matoy
   - 
   - 
   - 

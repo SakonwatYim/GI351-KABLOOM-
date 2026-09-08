@@ -14,9 +14,9 @@ using Unity.Mathematics;
 public class Block : MonoBehaviour
 {
     bool Isfly = true;
-    public BlockType blockType;//เรียกค่าจากenumมาใช้เพราะสคลิปนี้ยังไม่รู้จักelementต่างๆ
     public blockMeneger spawner;
-    public camera cam;
+/*    public camera cam;
+*/    public Destroy_Matoy Matoy;
     Rigidbody2D rb;
     int speed = 2;
     int max = 3;
@@ -26,14 +26,17 @@ public class Block : MonoBehaviour
     public float newScale;
     float newY;
     float newX;
+    float topY;
     bool isMelt;
+    bool hasMatoy;
     bool spawMelt;
+    bool spawPlant;
     bool spawMatoy;
     GameObject matoy;
     void melt()
     {
         newY = transform.localScale.y;
-        newY -= Time.deltaTime;
+        newY -= Time.deltaTime ;
         if (newY <= 0)
         {
             newY = 0;
@@ -58,10 +61,31 @@ public class Block : MonoBehaviour
         transform.localScale = new Vector2(newX, transform.localScale.y);
 
     }
+   
+    void Plant()
+    {
+        float newYPlant = gameObject.transform.localScale.y;
+       float sum = newYPlant + Time.deltaTime;
+        if (sum >= 3)
+        {
+            sum = 3;
+            spawPlant = false;
+
+        }
+        transform.localScale = new Vector2(spawner.previousBlock.transform.localScale.x, sum);
+
+    }
+  /*  IEnumerator Wait3()
+    {
+        yield return new WaitForSeconds(0.5f);*/
+    //}
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(2f);
+        Debug.Log("sd");
 
+        rb.gravityScale = 9.81f;
+        yield return new WaitForSeconds(0.5f);
+        spawner.haspress = true;
     }
     IEnumerator Wait2()
     {
@@ -71,10 +95,25 @@ public class Block : MonoBehaviour
     }
     IEnumerator Wait_boom()
     {
-        matoy = Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x, cam.targetY), UnityEngine.Quaternion.identity);
-        yield return new WaitForSeconds(8f);
-        spawMatoy = false;
+        if (spawner.matoy_count == 0)
+        {
+            topY = spawner.previousBlock.GetComponent<Collider2D>().bounds.max.y;
 
+
+            spawner.matoy_count++;
+            matoy = Instantiate(spawner.items_Matoy, new UnityEngine.Vector2(transform.position.x,topY), UnityEngine.Quaternion.identity);
+
+            float matoy_Topy = matoy.GetComponent<Collider2D>().bounds.max.y;
+
+            float sum =matoy_Topy - topY;
+            topY -= sum;
+            matoy.transform.position = new Vector2(transform.position.x, topY + 3);
+
+            topY = matoy_Topy;
+           yield return new WaitForSeconds(8f);
+            spawMatoy = false;
+        }
+       
 
     }
     IEnumerator Waitboost()
@@ -97,7 +136,6 @@ public class Block : MonoBehaviour
     }
     void Start()
     {
-        cam = FindAnyObjectByType<camera>();
         spawner = FindAnyObjectByType<blockMeneger>();
         rb = GetComponent<Rigidbody2D>();
         BoxCollider2D col = GetComponent<BoxCollider2D>();
@@ -138,6 +176,10 @@ public class Block : MonoBehaviour
     }
     private void Update()
     {
+        if (spawPlant == true)
+        {
+            Plant();
+        }
         if(isMelt == true)
         {
             melt();
@@ -147,78 +189,77 @@ public class Block : MonoBehaviour
             melt2();
         }
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (gameObject == spawner.newBlock && Input.GetKeyDown(KeyCode.Space)&& spawner.haspress== true)
         {
+            Debug.Log("Ad");
             rb.gravityScale = 1;
             Isfly = false;
-            StartCoroutine(Wait());
             rb.gravityScale = 9.81f;
+            spawner.haspress = false;
+            StartCoroutine(Wait());
+           
+
         }
         speedController();
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        if (collision2D.gameObject.CompareTag("Block"))
+        if(collision2D.gameObject.layer == LayerMask.NameToLayer("Block"))
+        /*(collision2D.gameObject.CompareTag("Block"))*/
+        /*(collision2D.gameObject.CompareTag("Block"))*/
         {
             Block otherBlock = collision2D.gameObject.GetComponent<Block>();
-            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Fire))
+            if ((gameObject.CompareTag("Fire")) && (collision2D.gameObject.CompareTag("Fire")))
             {
                 StartCoroutine(Waitboost());
             }
-            if ((blockType == BlockType.water && otherBlock.blockType == BlockType.water))
+            if ((gameObject.CompareTag("water")) && (collision2D.gameObject.CompareTag("water")))
             {
                 StartCoroutine(Waitslow());
             }
-            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.Plant)|| (blockType == BlockType.Plant && otherBlock.blockType == BlockType.Fire))
+            if ((gameObject.CompareTag("plant")) && (collision2D.gameObject.CompareTag("plant")))
+            {
+
+            }
+            if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("plant")))|| ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("Fire"))))
             {
                 spawMelt = true;
-                if (blockType == BlockType.Plant)
+                if (CompareTag("plant"))
                 {
-
+                    
                     isMelt = true;
-                    if (spawMelt == true)
-                    {
-                       
-                        spawMelt = false;
-                    }
-                    StartCoroutine(Wait2());
+                    
                     spawner.previousBlock = otherBlock.gameObject;
                 }
-                else if (otherBlock.blockType == BlockType.Plant)
+                else if (collision2D.gameObject.CompareTag("plant"))
                 {
+                   
                     isMelt = true;
 
-                    if (spawMelt == true)
-                    {
-                        spawMelt = false;
-                    }
-                    StartCoroutine(Wait2());
                     spawner.previousBlock = this.gameObject;
                 }
                 Debug.Log("Plant and Fire");
             }
-            if ((blockType == BlockType.Fire && otherBlock.blockType == BlockType.water)
-                || (blockType == BlockType.water && otherBlock.blockType == BlockType.Fire))
+            if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("water"))) || ((CompareTag("water")) && (collision2D.gameObject.CompareTag("Fire"))))
+            //((blockType == BlockType.Fire && otherBlock.blockType == BlockType.water)
+            //|| (blockType == BlockType.water && otherBlock.blockType == BlockType.Fire))
             {
-                if (blockType == BlockType.Fire)
+                if (CompareTag("Fire"))
                 {
-                    if (spawMatoy)
-                    {
-                        return;
-                    }
                     spawMatoy = true;
+
                     
+
                     //เสกหมอก
                     StartCoroutine((Wait_boom()));
                     spawner.previousBlock = otherBlock.gameObject;
                 }
-                else if (otherBlock.blockType == BlockType.Fire)
+                else if (collision2D.gameObject.CompareTag("Fire"))
                 {
-                    if (spawMatoy)
-                    {
-                        return;
-                    }
+                   
                     spawMatoy = true;
+
+                   
 
                     //เสกหมอก
                     StartCoroutine((Wait_boom()));
@@ -241,28 +282,31 @@ public class Block : MonoBehaviour
                 spawner.previousBlock = collision2D.gameObject;//บล็อกก่อนหน้าคือบล็ํอกที่ชน
                 spawner.newBlock = gameObject;
             }
-        
-            if ((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
+
+            if (((CompareTag("water")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("water"))))
+            //((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
             {
-                this.gameObject.transform.localScale = new Vector2(spawner.previousBlock.transform.localScale.x, spawner.newBlock.transform.localScale.y);
-                spawner.newBlock.transform.localScale = this.gameObject.transform.localScale;
+                
+                if (CompareTag("plant"))
+                 {
+                    spawPlant = true;
+                }
+                if (collision2D.gameObject.CompareTag("plant"))
+                {
+                    collision2D.gameObject.GetComponent<Block>().spawPlant = true;
+                }
                 Debug.Log("Plant and water");
+                
             }
-           /* if (SpawnA == true)
-            {
-                SpawnA = false;
-                spawner.spawnBllock(newScale);
-            } 
-   
-            else if (SpawnA == false )
-            {
-                spawner.spawnBllock(newScale);
-            }*/
-            spawner.Score  += 1;
+
             spawner.spawnBllock(newScale);
+
+
+            spawner.Score  += 1;
         }
 
-        if (collision2D.gameObject.CompareTag("floor"))
+        if(collision2D.gameObject.CompareTag("floor"))
+            //(collision2D.gameObject.CompareTag("floor"))
         {
            if (SpawnA == true)
             {
