@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-
 guid: 0989170f5f0422543a95f6336772c478
-
-guid: 588a21fab984bce4f85604ac5a4bdd7d
-
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -55,11 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-
   spritePixelsToUnits: 100
-
-  spritePixelsToUnits: 1400
-
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -114,17 +106,17 @@ TextureImporter:
         x: 0
         y: 0
         width: 1152
-        height: 30000
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        height: 2348
+      alignment: 9
+      pivot: {x: 0.46082288, y: 0.51515}
+      border: {x: 1, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 88c82d99da7dc92a0800000000000000
-      internalID: -6729266602588337016
+      spriteID: 4acac6b196ef5874c82cee00b83346b4
+      internalID: 1531298586
       vertices: []
       indices: 
       edges: []
@@ -133,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3ff5539921cc3ce4dbee8dc6646d6b3f
     internalID: 0
     vertices: []
     indices: 
@@ -143,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rapid 01 game BG_0: -6729266602588337016
+      rapid 01 game BG_0: 1531298586
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
