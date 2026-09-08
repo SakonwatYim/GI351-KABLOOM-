@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class UiManager : MonoBehaviour
 {
@@ -100,11 +101,14 @@ public class UiManager : MonoBehaviour
         SoundManager.GetInstance().PlaySound2D("Button");
     }
 
-    public void Quit()
+     public void Exit()
     {
         SoundManager.GetInstance().PlaySound2D("Button");
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
         Application.Quit();
-        
+#endif
     }
 
       public void UpdateMusicVolume()
