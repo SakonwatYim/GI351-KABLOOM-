@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 0a2f66f690f344641bbda09df8a6a99e
+guid: 0ef94416e580737468b51226586dac41
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5558323871465562815
-    second: tutorial window_0
-  - first:
-      213: 1375691414445884327
-    second: tutorial window_1
+      213: 4730000969188304387
+    second: Setting Button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tutorial window_0
+      name: Setting Button_0
       rect:
         serializedVersion: 2
-        x: 34
-        y: 404
-        width: 966
-        height: 1326
+        x: 0
+        y: 1
+        width: 93
+        height: 93
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 14d98be53eddcd2b0800000000000000
-      internalID: -5558323871465562815
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tutorial window_1
-      rect:
-        serializedVersion: 2
-        x: 1031
-        y: 523
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7a30a9e7d00771310800000000000000
-      internalID: 1375691414445884327
+      spriteID: 306e8b322d654a140800000000000000
+      internalID: 4730000969188304387
       vertices: []
       indices: 
       edges: []
@@ -150,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 80f00638647858548ba1f30e6039479b
+    spriteID: 9a1b758e46980b145a5c308337a29c45
     internalID: 0
     vertices: []
     indices: 
@@ -162,8 +137,7 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      tutorial window_0: -5558323871465562815
-      tutorial window_1: 1375691414445884327
+      Setting Button_0: 4730000969188304387
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

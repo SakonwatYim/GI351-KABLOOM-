@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 97de284bc8cb5ed4cb70c31516915d89
+guid: c57f32cabac7f94489e61f6d9e25a949
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7643109783763139008
-    second: endcredit window_0
+      213: 8075398036300084174
+    second: Screenshot 2026-08-29 152058_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: endcredit window_0
+      name: Screenshot 2026-08-29 152058_0
       rect:
         serializedVersion: 2
-        x: 78
-        y: 256
-        width: 994
-        height: 1399
+        x: 0
+        y: 0
+        width: 340
+        height: 76
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0c9b3887ad7c11a60800000000000000
-      internalID: 7643109783763139008
+      spriteID: ec3bd8d8ab3911070800000000000000
+      internalID: 8075398036300084174
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: afb8b0d854a6c2542ba25e3279309157
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -133,11 +133,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      endcredit window_0: 7643109783763139008
+      Screenshot 2026-08-29 152058_0: 8075398036300084174
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
