@@ -39,9 +39,9 @@ public class UiManager : MonoBehaviour
         
     }
 
-    public void Credits()
+    public void OpenCredits()
     {
-        SceneManager.LoadSceneAsync("Credits");
+        creditsRef.SetActive(true);
         SoundManager.GetInstance().PlaySound2D("Button");
     }
 
@@ -79,7 +79,7 @@ public class UiManager : MonoBehaviour
 
     }
 
-    public void HowToPlay()
+    public void OpenHowToPlay()
     {
         howToPlayRef.SetActive(true);
         SoundManager.GetInstance().PlaySound2D("Button");
@@ -88,7 +88,7 @@ public class UiManager : MonoBehaviour
     public void Back()
     {
         howToPlayRef.SetActive(false);
-        // creditsRef.SetActive(false);
+        creditsRef.SetActive(false);
         SettingRef.SetActive(false);
         
         SoundManager.GetInstance().PlaySound2D("Button");
@@ -145,8 +145,5 @@ public class UiManager : MonoBehaviour
     UpdateMusicVolume();
     UpdateSoundVolume();
     }
-     public void buttonClickSound()
-    {
-        SoundManager.GetInstance().PlaySound2D("ClickPlay");
-    }
+     
 }
