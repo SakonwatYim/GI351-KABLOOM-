@@ -11,9 +11,6 @@ TagManager:
   - Box
   - Block
   - floor
-  - water
-  - plant
-  - FinishLine
   layers:
   - Default
   - TransparentFX

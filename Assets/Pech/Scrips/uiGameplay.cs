@@ -11,7 +11,7 @@ public class uiGameplay : MonoBehaviour
 
     public void Retry()
     {
-        Time.timeScale = 1f; // รีเซ็ตเวลาให้กลับมาเดินปกติ (เผื่อถูกหยุดไว้ตอนจบเกม)
+        Time.timeScale = 1f; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         SoundManager.GetInstance().PlaySound2D("Button");
     }

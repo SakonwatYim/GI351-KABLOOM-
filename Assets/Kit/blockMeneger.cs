@@ -3,18 +3,12 @@ using System.Numerics;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class blockMeneger : MonoBehaviour
 {
 
-    /* public enum BlockType
-     {
-
-         Plant, 
-         water,
-         Normal,
-         Fire
-     }*/
+   
     public GameObject[] items;
     public GameObject items_melt;
     public GameObject items_Matoy;
@@ -33,14 +27,21 @@ public class blockMeneger : MonoBehaviour
     public float newScale;
     public int blockCount = 1;
     public int matoy_count = 0;
-    public int Score = 0;
-
+    public int Score = 1;
+    public TextMeshProUGUI scoreText;
 
 
     void Start()
     {
-
+        UpdateScoreUI();
         spawnBllock();
+    }
+    void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + Score;
+        }
     }
 
     // Update is called once per frame
@@ -81,7 +82,7 @@ public class blockMeneger : MonoBehaviour
         {
             blockCount ++;
         }
-       
+        UpdateScoreUI();
         //if else เป็นตัวช่วยกำหนด ใช้แต้ม
     }
 }

@@ -19,9 +19,9 @@ public class Block : MonoBehaviour
     */
     public Destroy_Matoy Matoy;
     Rigidbody2D rb;
-    int speed = 2;
-    int max = 3;
-    int min = -1;
+     public int speed = 10;
+    int max = 10;
+    int min = -10;
     int direction = 1;
     bool SpawnA = true;
     float newY;
@@ -391,11 +391,11 @@ public class Block : MonoBehaviour
         rb.MovePosition(new_position);
         if (rb.position.x >= max)
         {
-            direction = -3;
+            direction = -1;
         }
         else if (rb.position.x <= min)
         {
-            direction = 3;
+            direction = 1;
         }
 
 
