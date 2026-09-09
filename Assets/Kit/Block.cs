@@ -223,11 +223,21 @@ public class Block : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
+        if (gameObject != spawner.newBlock)
+
+        {
+            return;
+            //เช็คให้บล็อกล่าสุดคือ new block 
+        }
+        Block otherBlock = collision2D.gameObject.GetComponent<Block>();
+        if (otherBlock == null)
+            return;
+
+
         if (collision2D.gameObject.layer == LayerMask.NameToLayer("Block"))
         /*(collision2D.gameObject.CompareTag("Block"))*/
         /*(collision2D.gameObject.CompareTag("Block"))*/
         {
-            Block otherBlock = collision2D.gameObject.GetComponent<Block>();
             if ((gameObject.CompareTag("Fire")) && (collision2D.gameObject.CompareTag("Fire")))
             {
                 StartCoroutine(Waitboost());
@@ -312,20 +322,16 @@ public class Block : MonoBehaviour
 
             }
 
-            if (gameObject != spawner.newBlock)
-
-            {
-                return;
-                //เช็คให้บล็อกล่าสุดคือ new block 
-            }
 
 
-            if (spawner.previousBlock != null)
-            {
-                //ถ้าบล็อกล่าสุดมีอยู่แล้วให้ทำงานในฟังก์ชั่น
-                spawner.previousBlock = collision2D.gameObject;//บล็อกก่อนหน้าคือบล็ํอกที่ชน
-                spawner.newBlock = gameObject;
-            }
+            spawner.previousBlock = collision2D.gameObject;
+            spawner.newBlock = gameObject;
+            /* if (spawner.previousBlock != null)
+             {
+                 //ถ้าบล็อกล่าสุดมีอยู่แล้วให้ทำงานในฟังก์ชั่น
+                 spawner.previousBlock = collision2D.gameObject;//บล็อกก่อนหน้าคือบล็ํอกที่ชน
+                 spawner.newBlock = gameObject;
+             }*/
 
 
         }
