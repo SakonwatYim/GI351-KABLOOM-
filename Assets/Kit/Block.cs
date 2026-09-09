@@ -19,9 +19,9 @@ public class Block : MonoBehaviour
     */
     public Destroy_Matoy Matoy;
     Rigidbody2D rb;
-     public int speed = 10;
-    int max = 10;
-    int min = -10;
+    int speed = 2;
+    int max = 3;
+    int min = -1;
     int direction = 1;
     bool SpawnA = true;
     float newY;
@@ -93,11 +93,11 @@ public class Block : MonoBehaviour
         spawner.spawnBllock();
         spawner.Score += 1;
     }
-   /* void spawn()
-    {
-        spawner.spawnBllock();
-        spawner.Score += 1;
-    }*/
+    /* void spawn()
+     {
+         spawner.spawnBllock();
+         spawner.Score += 1;
+     }*/
     IEnumerator Wait2()
     {
         yield return new WaitForSeconds(4f);
@@ -120,8 +120,9 @@ public class Block : MonoBehaviour
             topY -= sum;
             matoy.transform.position = new Vector2(transform.position.x, topY + 6);
 
-/*            topY = matoy_Topy;
-*/            yield return new WaitForSeconds(8f);
+            /*            topY = matoy_Topy;
+            */
+            yield return new WaitForSeconds(8f);
             spawMatoy = false;
         }
 
@@ -223,38 +224,25 @@ public class Block : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        if (gameObject != spawner.newBlock)
-
-        {
-            return;
-            //เช็คให้บล็อกล่าสุดคือ new block 
-        }
-        Block otherBlock = collision2D.gameObject.GetComponent<Block>();
-        if (otherBlock == null)
-            return;
-
-
         if (collision2D.gameObject.layer == LayerMask.NameToLayer("Block"))
         /*(collision2D.gameObject.CompareTag("Block"))*/
         /*(collision2D.gameObject.CompareTag("Block"))*/
         {
+            Block otherBlock = collision2D.gameObject.GetComponent<Block>();
             if ((gameObject.CompareTag("Fire")) && (collision2D.gameObject.CompareTag("Fire")))
             {
                 StartCoroutine(Waitboost());
-                SoundManager.GetInstance().PlaySound2D("FireFire");
             }
             if ((gameObject.CompareTag("water")) && (collision2D.gameObject.CompareTag("water")))
             {
                 StartCoroutine(Waitslow());
-                SoundManager.GetInstance().PlaySound2D("WaterWater");
             }
             if ((gameObject.CompareTag("plant")) && (collision2D.gameObject.CompareTag("plant")))
             {
-                SoundManager.GetInstance().PlaySound2D("GlassGlass");
+
             }
             if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("Fire"))))
             {
-                SoundManager.GetInstance().PlaySound2D("FireGlass");
                 spawMelt = true;
                 if (CompareTag("plant"))
                 {
@@ -275,7 +263,6 @@ public class Block : MonoBehaviour
             if (((CompareTag("Fire")) && (collision2D.gameObject.CompareTag("water"))) || ((CompareTag("water")) && (collision2D.gameObject.CompareTag("Fire"))))
             //((blockType == BlockType.Fire && otherBlock.blockType == BlockType.water)
             //|| (blockType == BlockType.water && otherBlock.blockType == BlockType.Fire))
-            SoundManager.GetInstance().PlaySound2D("FireWater");
             {
                 if (CompareTag("Fire"))
                 {
@@ -302,13 +289,12 @@ public class Block : MonoBehaviour
                 Debug.Log("Fire and water");
             }
 
-           
+
 
             if (((CompareTag("water")) && (collision2D.gameObject.CompareTag("plant"))) || ((CompareTag("plant")) && (collision2D.gameObject.CompareTag("water"))))
             //((blockType == BlockType.water && otherBlock.blockType == BlockType.Plant) || (blockType == BlockType.Plant && otherBlock.blockType == BlockType.water))
             {
-                SoundManager.GetInstance().PlaySound2D("WaterGlass");
-             
+
                 if (CompareTag("plant"))
                 {
                     Debug.Log("matoy");
@@ -322,21 +308,25 @@ public class Block : MonoBehaviour
 
             }
 
+            if (gameObject != spawner.newBlock)
+
+            {
+                return;
+                //เช็คให้บล็อกล่าสุดคือ new block 
+            }
 
 
-            spawner.previousBlock = collision2D.gameObject;
-            spawner.newBlock = gameObject;
-            /* if (spawner.previousBlock != null)
-             {
-                 //ถ้าบล็อกล่าสุดมีอยู่แล้วให้ทำงานในฟังก์ชั่น
-                 spawner.previousBlock = collision2D.gameObject;//บล็อกก่อนหน้าคือบล็ํอกที่ชน
-                 spawner.newBlock = gameObject;
-             }*/
+            if (spawner.previousBlock != null)
+            {
+                //ถ้าบล็อกล่าสุดมีอยู่แล้วให้ทำงานในฟังก์ชั่น
+                spawner.previousBlock = collision2D.gameObject;//บล็อกก่อนหน้าคือบล็ํอกที่ชน
+                spawner.newBlock = gameObject;
+            }
 
 
         }
 
-        
+
     }
 
     /*public void CutBlock()
@@ -398,14 +388,19 @@ public class Block : MonoBehaviour
         if (rb.position.x >= max)
         {
             direction = -1;
+            direction = -3;
         }
         else if (rb.position.x <= min)
         {
             direction = 1;
+            direction = 3;
         }
 
 
     }
 
-   
+    // public void Star()
+
+    //รอเรื่องคะแนน
+
 }
